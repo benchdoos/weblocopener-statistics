@@ -21,7 +21,7 @@ public class UserService {
     private UserRepository userRepository;
 
     public void notifyLogin(UUID uuid, UserLoginDto userLogin) {
-        final Optional<User> firstByUuid = userRepository.findFirstByUuid(uuid);
+        final Optional<User> firstByUuid = userRepository.findById(uuid);
         if (firstByUuid.isPresent()) {
             final User user = firstByUuid.get();
             updateUserInfo(userLogin, user);
@@ -33,7 +33,7 @@ public class UserService {
     private void createNewUserForUuid(UUID uuid, UserLoginDto userLogin) {
         final Date date = new Date();
         final User user = User.builder()
-                .uuid(uuid)
+                .id(uuid)
                 .countryCode(userLogin.getCountryName())
                 .firstTimeSeen(date)
                 .lastTimeSeen(date)
@@ -61,6 +61,6 @@ public class UserService {
     }
 
     public User getUserByUuid(UUID uuid) {
-        return userRepository.findFirstByUuid(uuid).orElseThrow(UserNotFoundException::new);
+        return userRepository.findById(uuid).orElseThrow(UserNotFoundException::new);
     }
 }
