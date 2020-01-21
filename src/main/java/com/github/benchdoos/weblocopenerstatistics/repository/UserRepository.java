@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<User, UUID> {
-    Long countAllByLoginCounts();
+//    Long countAllByLoginCounts();
 
-    Long findFirstByLoginCountsOrderByLoginCountsDesc();
-    Long findFirstByLoginCountsOrderByLoginCountsAsc();
+    Long findTopByOrderByLoginCountsDesc();
+//    Long findFirstByLoginCountsOrderByLoginCountsAsc();
 
     List<User> findAllByLastTimeSeenBetween(Date from, Date to);
 }

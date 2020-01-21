@@ -1,1 +1,12 @@
-
+spring:
+  profiles:
+    active: PRODUCTION
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://ec2-54-75-235-28.eu-west-1.compute.amazonaws.com:5432/d1g72gpo4101e
+    username: fzdfvkzuzygxxn
+    password: 93bb16ba24d322cfe992c86c97e5ddae2fde5063ba77f89b6a5330722d1c5b29
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      connection-test-query: SELECT 1;
+      idle-timeout: 30000

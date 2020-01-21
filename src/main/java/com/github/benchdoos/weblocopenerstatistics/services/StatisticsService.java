@@ -35,9 +35,9 @@ public class StatisticsService {
 
         statistics.put("COUNTRY_CODES", countries);
 
-        statistics.put("USERS_AVERAGE_LOGIN_COUNT", userRepository.countAllByLoginCounts() / all.size());
-        statistics.put("USERS_MINIMAL_LOGIN_COUNT", userRepository.findFirstByLoginCountsOrderByLoginCountsDesc());
-        statistics.put("USERS_MAXIMAL_LOGIN_COUNT", userRepository.findFirstByLoginCountsOrderByLoginCountsAsc());
+//        statistics.put("USERS_AVERAGE_LOGIN_COUNT", userRepository.countAllByLoginCounts() / all.size());
+        statistics.put("USERS_MINIMAL_LOGIN_COUNT", userRepository.findTopByOrderByLoginCountsDesc());
+//        statistics.put("USERS_MAXIMAL_LOGIN_COUNT", userRepository.findFirstByLoginCountsOrderByLoginCountsAsc());
 
         //todo change this
         statistics.put("USERS_SEEN_WITHIN_A_MONTH", userRepository.findAllByLastTimeSeenBetween(new Date(), new Date()));
