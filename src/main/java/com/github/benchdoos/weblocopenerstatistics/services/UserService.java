@@ -37,6 +37,8 @@ public class UserService {
                 .countryCode(userLogin.getCountryName())
                 .firstTimeSeen(date)
                 .lastTimeSeen(date)
+                .selectedLanguage(userLogin.getSelectedLanguage())
+                .applicationVersion(userLogin.getApplicationVersion())
                 .loginCounts(1L)
                 .build();
         userRepository.save(user);
@@ -48,6 +50,7 @@ public class UserService {
         user.setSelectedLanguage(userLogin.getSelectedLanguage());
         user.setApplicationVersion(userLogin.getApplicationVersion());
         updateUserLoginCounts(user);
+        userRepository.save(user);
     }
 
     private void updateUserLoginCounts(User user) {
