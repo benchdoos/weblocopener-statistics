@@ -30,4 +30,8 @@ public class User {
     private Date lastTimeSeen;
 
     private String countryCode;
+
+    private String selectedLanguage;
+
+    private String applicationVersion;
 }

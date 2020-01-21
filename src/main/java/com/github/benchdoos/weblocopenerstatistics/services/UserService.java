@@ -45,6 +45,8 @@ public class UserService {
     private void updateUserInfo(UserLoginDto userLogin, User user) {
         user.setLastTimeSeen(new Date());
         user.setCountryCode(userLogin.getCountryName());
+        user.setSelectedLanguage(userLogin.getSelectedLanguage());
+        user.setApplicationVersion(userLogin.getApplicationVersion());
         updateUserLoginCounts(user);
     }
 
