@@ -9,4 +9,5 @@ import lombok.NoArgsConstructor;
 @Data
 public class UserLoginDto {
     private String countryName;
+    private String selectedLanguage;
 }
