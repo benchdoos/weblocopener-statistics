@@ -18,7 +18,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Slf4j
 public class UserService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public void notifyLogin(UUID uuid, UserLoginDto userLogin) {
         final Optional<User> firstByUuid = userRepository.findById(uuid);

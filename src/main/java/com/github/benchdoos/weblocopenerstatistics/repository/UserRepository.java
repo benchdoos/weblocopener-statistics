@@ -3,7 +3,6 @@ package com.github.benchdoos.weblocopenerstatistics.repository;
 import com.github.benchdoos.weblocopenerstatistics.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
