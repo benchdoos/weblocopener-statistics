@@ -1,7 +1,6 @@
 spring:
   profiles:
     active: PRODUCTION
-
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://ec2-54-75-235-28.eu-west-1.compute.amazonaws.com:5432/d1g72gpo4101e
@@ -17,3 +16,18 @@ spring:
     show-sql: true
     properties:
       hibernate.enable_lazy_load_no_trans: true
+
+server:
+  servlet:
+    context-path: /
+  port: 80
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - prometheus
+          - configprops
