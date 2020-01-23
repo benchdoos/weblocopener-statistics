@@ -26,11 +26,12 @@ public class UserService {
             final User user = firstByUuid.get();
             updateUserInfo(userLogin, user);
         } else {
-            createNewUserForUuid(uuid, userLogin);
+            final User newUserForUuid = createNewUserForUuid(uuid, userLogin);
+            log.info("User created with uuid: {}. User: {}", uuid, userLogin);
         }
     }
 
-    private void createNewUserForUuid(UUID uuid, UserLoginDto userLogin) {
+    private User createNewUserForUuid(UUID uuid, UserLoginDto userLogin) {
         final Date date = new Date();
         final User user = User.builder()
                 .id(uuid)
@@ -41,7 +42,7 @@ public class UserService {
                 .applicationVersion(userLogin.getApplicationVersion())
                 .loginCounts(1L)
                 .build();
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     private void updateUserInfo(UserLoginDto userLogin, User user) {
