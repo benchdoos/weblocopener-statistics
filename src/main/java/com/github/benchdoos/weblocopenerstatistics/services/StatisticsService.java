@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -28,16 +29,20 @@ public class StatisticsService {
 
         statistics.put("USERS_BY_COUNTRIES", getCountriesWithUsersCount());
 
-//        statistics.put("USERS_AVERAGE_LOGIN_COUNT", userRepository.countAllByLoginCounts() / all.size());
         statistics.put("USERS_MINIMAL_LOGIN_COUNT", userRepository.findFirstByOrderByLoginCountsDesc().getLoginCounts());
         statistics.put("USERS_MAXIMAL_LOGIN_COUNT", userRepository.findFirstByOrderByLoginCountsAsc().getLoginCounts());
 
-        //todo change this
-        statistics.put("USERS_SEEN_WITHIN_A_MONTH", userRepository.findAllByLastTimeSeenBetween(new Date(), new Date()));
+        final Date from = getMonthAgoDate();
+        statistics.put("USERS_SEEN_WITHIN_A_MONTH", userRepository.findAllByLastTimeSeenBetween(from, new Date()));
 
         return StatisticsReportDto.builder().statistics(statistics).generationDate(new Date()).build();
     }
 
+    private Date getMonthAgoDate() {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH,-1);
+        return calendar.getTime();
+    }
 
     private List<CountryLoginsView> getCountriesWithUsersCount() {
         final List<String> uniqueCountyCodes = userRepository.findUniqueCountyCodes();
