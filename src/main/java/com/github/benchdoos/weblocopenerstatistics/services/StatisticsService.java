@@ -2,6 +2,7 @@ package com.github.benchdoos.weblocopenerstatistics.services;
 
 import com.github.benchdoos.weblocopenerstatistics.domain.User;
 import com.github.benchdoos.weblocopenerstatistics.domain.dto.StatisticsReportDto;
+import com.github.benchdoos.weblocopenerstatistics.domain.projections.CountryLoginsView;
 import com.github.benchdoos.weblocopenerstatistics.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class StatisticsService {
-    private UserRepository userRepository;
-
+    private final UserRepository userRepository;
 
     public StatisticsReportDto getFullReport() {
         final Map<String, Object> statistics = new HashMap<>();
@@ -28,16 +28,11 @@ public class StatisticsService {
 
         statistics.put("TOTAL_REGISTERED", all.size());
 
-        final List<String> countries = all.stream()
-                .map(user -> StringUtils.hasText(user.getCountryCode()) ? user.getCountryCode() : "unset")
-                .distinct()
-                .collect(Collectors.toList());
-
-        statistics.put("COUNTRY_CODES", countries);
+        statistics.put("COUNTRIES", getCountriesWithLoginCounts());
 
 //        statistics.put("USERS_AVERAGE_LOGIN_COUNT", userRepository.countAllByLoginCounts() / all.size());
-        statistics.put("USERS_MINIMAL_LOGIN_COUNT", userRepository.findTopByOrderByLoginCountsDesc());
-//        statistics.put("USERS_MAXIMAL_LOGIN_COUNT", userRepository.findFirstByLoginCountsOrderByLoginCountsAsc());
+        statistics.put("USERS_MINIMAL_LOGIN_COUNT", userRepository.findFirstByOrderByLoginCountsDesc().getLoginCounts());
+        statistics.put("USERS_MAXIMAL_LOGIN_COUNT", userRepository.findFirstByOrderByLoginCountsAsc().getLoginCounts());
 
         //todo change this
         statistics.put("USERS_SEEN_WITHIN_A_MONTH", userRepository.findAllByLastTimeSeenBetween(new Date(), new Date()));
@@ -45,4 +40,10 @@ public class StatisticsService {
         return StatisticsReportDto.builder().statistics(statistics).generationDate(new Date()).build();
     }
 
+
+    private List<CountryLoginsView> getCountriesWithLoginCounts() {
+        final List<String> uniqueCountyCodes = userRepository.findUniqueCountyCodes();
+        final Long aLong = userRepository.countByCountryCodeIn(uniqueCountyCodes);
+        return userRepository.countLoginsByCountryCodes(uniqueCountyCodes);
+    }
 }

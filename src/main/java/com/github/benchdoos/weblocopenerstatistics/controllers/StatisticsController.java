@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController("/statistics")
 @Slf4j
 public class StatisticsController {
-    private StatisticsService statisticsService;
+    private final StatisticsService statisticsService;
 
     @GetMapping("/report")
     public StatisticsReportDto getStatisticsReport() {

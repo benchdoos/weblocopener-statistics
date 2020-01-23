@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
@@ -20,7 +19,6 @@ import java.util.UUID;
 @Builder
 public class User {
     @Id
-    @GeneratedValue
     private UUID id;
 
     private Long loginCounts;
