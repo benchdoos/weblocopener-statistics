@@ -15,8 +15,10 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
     show-sql: true
     properties:
-      hibernate.enable_lazy_load_no_trans: true
-#todo add hibernate pool count = 15
+      hibernate:
+        enable_lazy_load_no_trans: true #todo mby remove?
+        connection:
+          pool_size: 15
 server:
   servlet:
     context-path: /
