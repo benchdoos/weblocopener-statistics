@@ -7,13 +7,11 @@ import com.github.benchdoos.weblocopenerstatistics.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +26,7 @@ public class StatisticsService {
 
         statistics.put("TOTAL_REGISTERED", all.size());
 
-        statistics.put("COUNTRIES", getCountriesWithLoginCounts());
+        statistics.put("USERS_BY_COUNTRIES", getCountriesWithUsersCount());
 
 //        statistics.put("USERS_AVERAGE_LOGIN_COUNT", userRepository.countAllByLoginCounts() / all.size());
         statistics.put("USERS_MINIMAL_LOGIN_COUNT", userRepository.findFirstByOrderByLoginCountsDesc().getLoginCounts());
@@ -41,9 +39,9 @@ public class StatisticsService {
     }
 
 
-    private List<CountryLoginsView> getCountriesWithLoginCounts() {
+    private List<CountryLoginsView> getCountriesWithUsersCount() {
         final List<String> uniqueCountyCodes = userRepository.findUniqueCountyCodes();
         final Long aLong = userRepository.countByCountryCodeIn(uniqueCountyCodes);
-        return userRepository.countLoginsByCountryCodes(uniqueCountyCodes);
+        return userRepository.countUsersByCountryCodes(uniqueCountyCodes);
     }
 }

@@ -24,7 +24,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
             "new com.github.benchdoos.weblocopenerstatistics.domain.projections.CountryLoginsView(countryCode, count(loginCounts)) " +
             "from User " +
             "group by countryCode")
-    List<CountryLoginsView> countLoginsByCountryCodes(List<String> countryCodes);
+    List<CountryLoginsView> countUsersByCountryCodes(List<String> countryCodes);
 
     Long countByCountryCodeIn(List<String> codes);
 }
