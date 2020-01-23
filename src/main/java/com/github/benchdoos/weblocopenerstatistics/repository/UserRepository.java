@@ -7,11 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<User, UUID> {
-//    Long countAllByLoginCounts();
 
     User findFirstByOrderByLoginCountsAsc();
 
