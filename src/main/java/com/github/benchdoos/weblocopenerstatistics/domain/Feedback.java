@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,4 +39,7 @@ public class Feedback {
             orphanRemoval = true
     )
     private List<ImageInfo> images;
+
+    @NotNull
+    private Date date;
 }

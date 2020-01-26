@@ -5,6 +5,7 @@ import com.github.benchdoos.weblocopenerstatistics.domain.dto.UserLoginDto;
 import com.github.benchdoos.weblocopenerstatistics.exceptions.UserNotFoundException;
 import com.github.benchdoos.weblocopenerstatistics.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
