@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -30,8 +31,10 @@ public class Feedback {
     @NotNull
     private UUID userUuid;
 
-    private String base64FeedbackMessage;
+    @Column(columnDefinition = "TEXT", length = 30000)
+    private String feedbackMessage;
 
+    @Column(columnDefinition = "TEXT", length = 30000)
     private String base64LogFile;
 
     @OneToMany(
