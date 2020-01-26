@@ -25,5 +25,7 @@ public class FeedbackDto {
 
     private String base64LogFile;
 
+    private String email;
+
     private List<ImageInfoDto> images;
 }

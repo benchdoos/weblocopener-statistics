@@ -37,6 +37,8 @@ public class Feedback {
     @Column(columnDefinition = "TEXT", length = 30000)
     private String base64LogFile;
 
+    private String email;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true
