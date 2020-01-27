@@ -11,7 +11,7 @@ spring:
       connection-test-query: SELECT 1;
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
     show-sql: true
     properties:
@@ -19,6 +19,13 @@ spring:
         enable_lazy_load_no_trans: true #todo mby remove?
         connection:
           pool_size: 15
+  flyway:
+    enabled: true
+    encoding: UTF-8
+    locations: classpath:/db/flyway/migration/
+    validate-on-migrate: true
+    baseline-on-migrate: true
+
 server:
   servlet:
     context-path: /
@@ -49,7 +56,7 @@ spring:
       connection-test-query: SELECT 1;
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
     show-sql: true
     properties:
@@ -57,11 +64,17 @@ spring:
         enable_lazy_load_no_trans: true #todo mby remove?
         connection:
           pool_size: 15
+  flyway:
+    enabled: true
+    encoding: UTF-8
+    locations: classpath:/db/flyway/migration/
+    validate-on-migrate: true
+    baseline-on-migrate: true
+
 server:
   servlet:
     context-path: /
   port: 8022
-#  port: 8080
 
 management:
   endpoints:
