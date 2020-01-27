@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserLoginDto {
+public class ApplicationLoginDto {
 
     private String countryName;
 

@@ -12,12 +12,12 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users")
+@Table(name = "application_logins")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class User {
+public class ApplicationLogin {
     @Id
     private UUID id;
 
