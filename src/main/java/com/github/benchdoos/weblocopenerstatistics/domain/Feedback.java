@@ -47,4 +47,6 @@ public class Feedback {
 
     @NotNull
     private Date date;
+
+    private Boolean seen;
 }

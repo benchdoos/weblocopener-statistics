@@ -40,5 +40,10 @@ public class FeedbackController {
     public Feedback getFeedback(@PathVariable @NotNull UUID uuid) {
         return feedbackService.getFeedbackById(uuid);
     }
+
+    @PostMapping("/{uuid}/seen")
+    public Feedback setSeen(@PathVariable UUID uuid) {
+        return feedbackService.updateSeen(uuid);
+    }
 }
 

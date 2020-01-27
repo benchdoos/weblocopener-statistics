@@ -2,6 +2,7 @@ package com.github.benchdoos.weblocopenerstatistics.services;
 
 import com.github.benchdoos.weblocopenerstatistics.domain.Feedback;
 import com.github.benchdoos.weblocopenerstatistics.domain.dto.FeedbackDto;
+import com.github.benchdoos.weblocopenerstatistics.exceptions.FeedbackNotFoundException;
 import com.github.benchdoos.weblocopenerstatistics.mappers.FeedbackDtoToFeedbackMapper;
 import com.github.benchdoos.weblocopenerstatistics.repository.FeedbackRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +21,13 @@ import java.util.UUID;
 @Service
 public class FeedbackService {
     private final FeedbackRepository feedbackRepository;
-    private final FeedbackDtoToFeedbackMapper feedbackMapper = Mappers.getMapper(FeedbackDtoToFeedbackMapper.class);
+    private final FeedbackDtoToFeedbackMapper mapper = Mappers.getMapper(FeedbackDtoToFeedbackMapper.class);
 
     public UUID createFeedback(FeedbackDto feedbackDto) {
-        final Feedback feedback = feedbackMapper.convert(feedbackDto);
+        final Feedback feedback = mapper.convert(feedbackDto);
         feedback.setDate(new Date());
         feedback.setFeedbackMessage(new String(Base64.getDecoder().decode(feedbackDto.getBase64FeedbackMessage()), StandardCharsets.UTF_8));
+        feedback.setSeen(false);
 
         final Feedback save = feedbackRepository.save(feedback);
         return save.getId();
@@ -37,5 +39,11 @@ public class FeedbackService {
 
     public Feedback getFeedbackById(UUID uuid) {
         return feedbackRepository.findById(uuid).orElseThrow(EntityNotFoundException::new);
+    }
+
+    public Feedback updateSeen(UUID uuid) {
+        final Feedback feedback = feedbackRepository.findById(uuid).orElseThrow(FeedbackNotFoundException::new);
+        feedback.setSeen(true);
+        return feedbackRepository.save(feedback);
     }
 }
