@@ -20,7 +20,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Slf4j
 @RestController
-@RequestMapping("/applications")
+@RequestMapping("/application-login")
 public class ApplicationLoginController {
     private final ApplicationsService applicationsService;
 
