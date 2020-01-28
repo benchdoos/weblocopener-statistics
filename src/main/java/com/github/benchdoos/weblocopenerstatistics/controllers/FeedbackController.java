@@ -45,5 +45,10 @@ public class FeedbackController {
     public Feedback setSeen(@PathVariable UUID uuid) {
         return feedbackService.updateSeen(uuid);
     }
+
+    @PostMapping("/all/seen")
+    public Page<Feedback> setSeenAll(@PageableDefault Pageable page) {
+        return feedbackService.updateSeenAll(page);
+    }
 }
 

@@ -15,6 +15,7 @@ import javax.persistence.EntityNotFoundException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -45,5 +46,12 @@ public class FeedbackService {
         final Feedback feedback = feedbackRepository.findById(uuid).orElseThrow(FeedbackNotFoundException::new);
         feedback.setSeen(true);
         return feedbackRepository.save(feedback);
+    }
+
+    public Page<Feedback> updateSeenAll(Pageable page) {
+        final List<Feedback> allBySeen = feedbackRepository.findAllBySeen(false);
+        allBySeen.forEach(c -> c.setSeen(true));
+        feedbackRepository.saveAll(allBySeen);
+        return feedbackRepository.findAll(page);
     }
 }
