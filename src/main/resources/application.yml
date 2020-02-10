@@ -85,3 +85,47 @@ management:
           - info
           - prometheus
           - configprops
+
+---
+
+spring:
+  profiles: DEVELOP_LOCAL
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/weblocopener_statistics
+    username: weblocopener_statistics
+    password: weblocopener_statistics
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      connection-test-query: SELECT 1;
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    show-sql: true
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true #todo mby remove?
+        connection:
+          pool_size: 15
+  flyway:
+    enabled: false
+    encoding: UTF-8
+    locations: classpath:/db/flyway/migration/
+    validate-on-migrate: true
+    baseline-on-migrate: true
+
+server:
+  servlet:
+    context-path: /
+  port: 8022
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - prometheus
+          - configprops
