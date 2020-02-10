@@ -39,4 +39,7 @@ public class User {
     @Enumerated
     private Collection<Role> roles;
 
+    @Column(name = "enabled")
+    boolean enabled;
+
 }

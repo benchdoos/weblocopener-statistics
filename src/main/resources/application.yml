@@ -45,7 +45,7 @@ management:
 ---
 
 spring:
-  profiles: DEVELOP
+  profiles: DEVELOP, SWAGGER
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/weblocopener_statistics
@@ -89,7 +89,7 @@ management:
 ---
 
 spring:
-  profiles: DEVELOP_LOCAL
+  profiles: DEVELOP_LOCAL, SWAGGER
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/weblocopener_statistics
