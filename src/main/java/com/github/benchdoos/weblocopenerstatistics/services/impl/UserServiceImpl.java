@@ -1,8 +1,9 @@
-package com.github.benchdoos.weblocopenerstatistics.services;
+package com.github.benchdoos.weblocopenerstatistics.services.impl;
 
 import com.github.benchdoos.weblocopenerstatistics.domain.User;
 import com.github.benchdoos.weblocopenerstatistics.exceptions.UserNotFoundException;
 import com.github.benchdoos.weblocopenerstatistics.repository.UserRepository;
+import com.github.benchdoos.weblocopenerstatistics.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
