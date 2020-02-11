@@ -71,13 +71,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         if (isSwaggerActive) {
             configureForSwagger(http);
         }
-
         http.authorizeRequests()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .and()
-                .oauth2Client();
+                .oauth2Login()
+                .clientRegistrationRepository(clientRegistrationRepository())
+                .authorizedClientService(authorizedClientService());
     }
 
 
