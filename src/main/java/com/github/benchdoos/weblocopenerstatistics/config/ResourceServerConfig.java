@@ -10,23 +10,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
-/**
- * Конфигурация ResourceServer для нужд интеграции с ESIA-OAUTH
- */
 @Component
 @EnableResourceServer //todo change annotation
 @RequiredArgsConstructor
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-    //    private final ResourceServerProperties resource;
     private final Environment environment;
-
-
-    @Override
-    public void configure(ResourceServerSecurityConfigurer resources) {
-//        resources.resourceId(this.resource.getResourceId());
-    }
-
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
