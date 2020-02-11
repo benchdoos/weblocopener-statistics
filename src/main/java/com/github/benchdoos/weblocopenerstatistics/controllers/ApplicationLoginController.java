@@ -1,5 +1,6 @@
 package com.github.benchdoos.weblocopenerstatistics.controllers;
 
+import com.github.benchdoos.weblocopenerstatistics.config.AuthoritiesConstants;
 import com.github.benchdoos.weblocopenerstatistics.domain.ApplicationLogin;
 import com.github.benchdoos.weblocopenerstatistics.domain.dto.ApplicationLoginDto;
 import com.github.benchdoos.weblocopenerstatistics.services.ApplicationsService;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,17 +26,20 @@ import java.util.UUID;
 public class ApplicationLoginController {
     private final ApplicationsService applicationsService;
 
+    @Secured({AuthoritiesConstants.RECORD_APPLICATION_LOGIN})
     @PostMapping("/notify/{uuid}")
     public void notifyApplicationLogin(@PathVariable UUID uuid,
                                        @RequestBody ApplicationLoginDto userLogin) {
         applicationsService.notifyLogin(uuid, userLogin);
     }
 
+    @Secured({AuthoritiesConstants.READ_STATISTICS})
     @GetMapping("/{uuid}")
     public ApplicationLogin getApplicationByUuid(@PathVariable UUID uuid) {
         return applicationsService.getUserByUuid(uuid);
     }
 
+    @Secured({AuthoritiesConstants.READ_STATISTICS})
     @GetMapping("/all")
     public Page<ApplicationLogin> getAllApplications(@PageableDefault Pageable page) {
         return applicationsService.getAllUsers(page);
