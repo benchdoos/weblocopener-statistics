@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.lang.Nullable;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
@@ -47,5 +49,8 @@ public class ClientProperties {
 
         @NotEmpty
         private Set<String> scopes;
+
+        @Nullable
+        private AuthorizationGrantType authorizationGrantType;
     }
 }

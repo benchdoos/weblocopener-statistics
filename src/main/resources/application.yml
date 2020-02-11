@@ -131,6 +131,7 @@ security:
       redirect-uri-template: '/login/oauth2/code/{registrationId}'
       authorization-uri: '/login/oauth2/code/{registrationId}'
       token-uri: '/oauth2/token'
+      authorization-grant-type: password
       scopes:
         - web
 

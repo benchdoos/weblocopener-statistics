@@ -3,6 +3,7 @@ package com.github.benchdoos.weblocopenerstatistics.config;
 import com.github.benchdoos.weblocopenerstatistics.config.properties.ClientProperties;
 import com.github.benchdoos.weblocopenerstatistics.services.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +28,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Configuration
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
@@ -68,10 +70,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyMatch("swagger"::equalsIgnoreCase);
         if (isSwaggerActive) {
             configureForSwagger(http);
-
         }
-        http
-                .authorizeRequests()
+
+        http.authorizeRequests()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -117,10 +118,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .clientSecret(client.getClientSecret())
                 .scope(client.getScopes())
                 .clientAuthenticationMethod(ClientAuthenticationMethod.BASIC)
-                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .redirectUriTemplate(client.getRedirectUriTemplate())
                 .authorizationUri(client.getAuthorizationUri())
                 .tokenUri(client.getTokenUri());
+
+        if (client.getAuthorizationGrantType() != null) {
+            log.info("AuthorizationGrantType for client {} is: {}", client.getClientName(), client.getAuthorizationGrantType().getValue());
+            builder.authorizationGrantType(client.getAuthorizationGrantType());
+        } else {
+            builder.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE);
+        }
 
         return builder.build();
     }
