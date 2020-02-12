@@ -25,6 +25,16 @@ spring:
     locations: classpath:/db/flyway/migration/
     validate-on-migrate: true
     baseline-on-migrate: true
+  redis:
+    host: redis-14372.c226.eu-west-1-3.ec2.cloud.redislabs.com
+    password: CeVIz03eBaZYA2V9DelK9334rT1JLbhl
+    port: 14372
+
+token:
+  access:
+    validitySeconds: 7200
+  refresh:
+    validitySeconds: 86400
 
 server:
   servlet:
@@ -70,6 +80,16 @@ spring:
     locations: classpath:/db/flyway/migration/
     validate-on-migrate: true
     baseline-on-migrate: true
+  redis:
+    host: redis-14372.c226.eu-west-1-3.ec2.cloud.redislabs.com
+    password: CeVIz03eBaZYA2V9DelK9334rT1JLbhl
+    port: 14372
+
+token:
+  access:
+    validitySeconds: 7200
+  refresh:
+    validitySeconds: 86400
 
 server:
   servlet:
@@ -114,6 +134,10 @@ spring:
     locations: classpath:/db/flyway/migration/
     validate-on-migrate: true
     baseline-on-migrate: true
+  redis:
+    host: localhost
+    password: password
+    port: 6379
 
 security:
   trusted-clients:
@@ -121,6 +145,13 @@ security:
       client-secret: 994331a6-7062-4dbc-9ad8-780cc89dd1b4
     - client-name: webclient
       client-secret: 72f94e3f-7cd6-4e0b-ad52-4487b32a2aee
+
+token:
+  access:
+    validitySeconds: 86400
+  refresh:
+    validitySeconds: 86400
+
 
 server:
   servlet:
