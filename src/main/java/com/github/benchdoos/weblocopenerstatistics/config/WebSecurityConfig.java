@@ -14,6 +14,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AndRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import java.util.Arrays;
 
@@ -22,6 +27,19 @@ import java.util.Arrays;
 @Configuration
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
+            new AntPathRequestMatcher("/public/**"),
+            new AntPathRequestMatcher("/webjars/**")
+    );
+
+    private static final RequestMatcher SWAGGER_URLS = new AndRequestMatcher(
+            new AntPathRequestMatcher("/v2/api-docs"),
+            new AntPathRequestMatcher("/swagger-resources/**"),
+            new AntPathRequestMatcher("/swagger-ui.html"),
+            new AntPathRequestMatcher("/csrf")
+
+    );
 
     private final Environment environment;
 
@@ -60,21 +78,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         }
 
         http.authorizeRequests()
+                .requestMatchers(PUBLIC_URLS).permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin();
     }
 
-
-
-
     private void configureForSwagger(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(
-                        "/v2/api-docs",
-                        "/swagger-resources/**",
-                        "/swagger-ui.html",
-                        "/webjars/**", "/csrf").permitAll();
+                .requestMatchers(new NegatedRequestMatcher(SWAGGER_URLS))
+                .permitAll();
     }
 }
