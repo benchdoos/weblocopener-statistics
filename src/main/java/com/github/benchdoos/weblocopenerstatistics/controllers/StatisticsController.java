@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.github.benchdoos.weblocopenerstatistics.config.AuthoritiesConstants.*;
+
 @RequiredArgsConstructor
 @Slf4j
 @RestController
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class StatisticsController {
     private final StatisticsService statisticsService;
 
-    @Secured({AuthoritiesConstants.READ_STATISTICS})
+    @Secured({ROLE_ADMIN, ROLE_STATISTICS_VIEWER})
     @GetMapping("/report")
     public StatisticsReportDto getStatisticsReport() {
         return statisticsService.getFullReport();

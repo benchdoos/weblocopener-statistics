@@ -4,19 +4,25 @@ package com.github.benchdoos.weblocopenerstatistics.config;
  * All authorities
  */
 public class AuthoritiesConstants {
-    /**
-     * Read all statistics / admin only
-     */
-    public static final String READ_STATISTICS = "READ_STATISTICS";
 
     /**
-     * Update statistics
+     * Admin, can do everything
      */
-    public static final String UPDATE_STATISTICS = "UPDATE_STATISTICS";
+    public static final String ROLE_ADMIN = "ROLE_ADMIN";
 
     /**
-     * Write statistics / weblocopener core application
+     * WeblocOpenerCore application, can record logins
      */
-    public static final String RECORD_APPLICATION_LOGIN = "RECORD_APPLICATION_LOGIN";
+    public static final String ROLE_WEBLOCOPENER_APPLICATION = "ROLE_WEBLOCOPENER_APPLICATION";
+
+    /**
+     * Web application, can convert links
+     */
+    public static final String ROLE_WEB_CLIENT = "ROLE_WEB_CLIENT";
+
+    /**
+     * User that can read statistics only
+     */
+    public static final String ROLE_STATISTICS_VIEWER = "ROLE_STATISTICS_VIEWER";
 
 }

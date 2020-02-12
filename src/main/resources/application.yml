@@ -116,24 +116,11 @@ spring:
     baseline-on-migrate: true
 
 security:
-  clients:
+  trusted-clients:
     - client-name: weblocopener_application
-      client-id: weblocopener_application
       client-secret: 994331a6-7062-4dbc-9ad8-780cc89dd1b4
-      redirect-uri-template: '/login/oauth2/code/{registrationId}'
-      authorization-uri: '/login/oauth2/code/{registrationId}'
-      token-uri: '/oauth2/token'
-      scopes:
-        - application
     - client-name: webclient
-      client-id: webclient
       client-secret: 72f94e3f-7cd6-4e0b-ad52-4487b32a2aee
-      redirect-uri-template: '/login/oauth2/code/{registrationId}'
-      authorization-uri: '/login/oauth2/code/{registrationId}'
-      token-uri: '/oauth2/token'
-      authorization-grant-type: password
-      scopes:
-        - web
 
 server:
   servlet:

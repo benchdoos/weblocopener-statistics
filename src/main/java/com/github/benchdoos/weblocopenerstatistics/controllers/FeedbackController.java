@@ -21,6 +21,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
+import static com.github.benchdoos.weblocopenerstatistics.config.AuthoritiesConstants.*;
+
 @RequiredArgsConstructor
 @Slf4j
 @RestController
@@ -28,31 +30,31 @@ import java.util.UUID;
 public class FeedbackController {
     private final FeedbackService feedbackService;
 
-    @Secured(AuthoritiesConstants.READ_STATISTICS)
+    @Secured({ROLE_ADMIN, ROLE_STATISTICS_VIEWER})
     @PostMapping
     public UUID createFeedback(@Valid @RequestBody FeedbackDto feedbackDto) {
         return feedbackService.createFeedback(feedbackDto);
     }
 
-    @Secured(AuthoritiesConstants.READ_STATISTICS)
+    @Secured({ROLE_ADMIN, ROLE_STATISTICS_VIEWER})
     @GetMapping("/list")
     public Page<Feedback> getFeedbacks(@PageableDefault Pageable page) {
         return feedbackService.getFeedbacks(page);
     }
 
-    @Secured(AuthoritiesConstants.READ_STATISTICS)
+    @Secured({ROLE_ADMIN})
     @GetMapping("/{uuid}")
     public Feedback getFeedback(@PathVariable @NotNull UUID uuid) {
         return feedbackService.getFeedbackById(uuid);
     }
 
-    @Secured({AuthoritiesConstants.UPDATE_STATISTICS})
+    @Secured({ROLE_ADMIN})
     @PostMapping("/{uuid}/seen")
     public Feedback setSeen(@PathVariable UUID uuid) {
         return feedbackService.updateSeen(uuid);
     }
 
-    @Secured(AuthoritiesConstants.UPDATE_STATISTICS)
+    @Secured({ROLE_ADMIN})
     @PostMapping("/all/seen")
     public Page<Feedback> setSeenAll(@PageableDefault Pageable page) {
         return feedbackService.updateSeenAll(page);

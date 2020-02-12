@@ -1,6 +1,5 @@
 package com.github.benchdoos.weblocopenerstatistics.controllers;
 
-import com.github.benchdoos.weblocopenerstatistics.config.AuthoritiesConstants;
 import com.github.benchdoos.weblocopenerstatistics.domain.ApplicationLogin;
 import com.github.benchdoos.weblocopenerstatistics.domain.dto.ApplicationLoginDto;
 import com.github.benchdoos.weblocopenerstatistics.services.ApplicationsService;
@@ -19,6 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
+import static com.github.benchdoos.weblocopenerstatistics.config.AuthoritiesConstants.ROLE_ADMIN;
+import static com.github.benchdoos.weblocopenerstatistics.config.AuthoritiesConstants.ROLE_STATISTICS_VIEWER;
+import static com.github.benchdoos.weblocopenerstatistics.config.AuthoritiesConstants.ROLE_WEBLOCOPENER_APPLICATION;
+
 @RequiredArgsConstructor
 @Slf4j
 @RestController
@@ -26,20 +29,20 @@ import java.util.UUID;
 public class ApplicationLoginController {
     private final ApplicationsService applicationsService;
 
-    @Secured({AuthoritiesConstants.RECORD_APPLICATION_LOGIN})
+    @Secured({ROLE_ADMIN, ROLE_WEBLOCOPENER_APPLICATION})
     @PostMapping("/notify/{uuid}")
     public void notifyApplicationLogin(@PathVariable UUID uuid,
                                        @RequestBody ApplicationLoginDto userLogin) {
         applicationsService.notifyLogin(uuid, userLogin);
     }
 
-    @Secured({AuthoritiesConstants.READ_STATISTICS})
+    @Secured({ROLE_ADMIN, ROLE_STATISTICS_VIEWER})
     @GetMapping("/{uuid}")
     public ApplicationLogin getApplicationByUuid(@PathVariable UUID uuid) {
         return applicationsService.getUserByUuid(uuid);
     }
 
-    @Secured({AuthoritiesConstants.READ_STATISTICS})
+    @Secured({ROLE_ADMIN, ROLE_STATISTICS_VIEWER})
     @GetMapping("/all")
     public Page<ApplicationLogin> getAllApplications(@PageableDefault Pageable page) {
         return applicationsService.getAllUsers(page);
