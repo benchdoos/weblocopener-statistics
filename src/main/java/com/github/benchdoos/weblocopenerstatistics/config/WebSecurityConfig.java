@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AndRequestMatcher;
@@ -24,7 +24,7 @@ import java.util.Arrays;
 @Slf4j
 @RequiredArgsConstructor
 @Configuration
-@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
@@ -39,6 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             new AntPathRequestMatcher("/csrf")
 
     );
+    private static final String SWAGGER_PROFILE_NAME = "swagger";
 
     private final Environment environment;
 
@@ -64,20 +65,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         web.ignoring()
                 .antMatchers("/webjars/**");
-
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        final boolean isSwaggerActive = Arrays.stream(environment.getActiveProfiles())
-                .anyMatch("swagger"::equalsIgnoreCase);
-        if (isSwaggerActive) {
+        final boolean swaggerProfileActive = Arrays.stream(environment.getActiveProfiles())
+                .anyMatch(SWAGGER_PROFILE_NAME::equalsIgnoreCase);
+        if (swaggerProfileActive) {
             configureForSwagger(http);
         }
 
         http.authorizeRequests()
                 .requestMatchers(PUBLIC_URLS).permitAll()
-                .antMatchers("/oauth/token").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin();
