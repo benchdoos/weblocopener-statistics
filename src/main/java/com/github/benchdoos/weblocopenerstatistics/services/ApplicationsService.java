@@ -32,12 +32,9 @@ public class ApplicationsService {
     }
 
     private ApplicationLogin createNewUserForUuid(UUID uuid, ApplicationLoginDto userLogin) {
-        final Date date = new Date();
         final ApplicationLogin applicationLogin = ApplicationLogin.builder()
                 .id(uuid)
                 .countryCode(userLogin.getCountryName())
-                .firstTimeSeen(date)
-                .lastTimeSeen(date)
                 .selectedLanguage(userLogin.getSelectedLanguage())
                 .applicationVersion(userLogin.getApplicationVersion())
                 .loginCounts(1L)
